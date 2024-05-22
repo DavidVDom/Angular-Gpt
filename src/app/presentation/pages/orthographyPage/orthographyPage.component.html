@@ -4,7 +4,12 @@
       <!-- Chat Messages -->
       <app-chat-message text="Escriba el texto que quiere revisar" />
       <app-my-message text="Hola Mundo" />
+      <app-typing-loader />
     </div>
   </div>
   <!-- MessagesBox -->
+  <app-text-message-box
+    placeholder="Escribe el mensaje"
+    (onMessage)="handleMessage($event)"
+  />
 </div>
