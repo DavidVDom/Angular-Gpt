@@ -17,20 +17,20 @@
     </div>
   </div>
   <!-- MessagesBox -->
-  <!-- <app-text-message-box
+  <app-text-message-box
     placeholder="Escribe el mensaje"
     (onMessage)="handleMessage($event)"
-  /> -->
-  <!-- <app-text-message-box-file
-    placeholder="Escribe el mensaje"
-    (onMessage)="handleMessageWithFile($event)"
-  /> -->
-  <app-text-message-box-select
-    placeholder="Escribe el mensaje"
-    [options]="[
-      { id: '1', text: 'Uno' },
-      { id: '2', text: 'Dos' }
-    ]"
-    (onMessage)="handleMessageWithSelect($event)"
   />
+  <!-- <app-text-message-box-file
+      placeholder="Escribe el mensaje"
+      (onMessage)="handleMessageWithFile($event)"
+    /> -->
+  <!-- <app-text-message-box-select
+      placeholder="Escribe el mensaje"
+      [options]="[
+        { id: '1', text: 'Uno' },
+        { id: '2', text: 'Dos' }
+      ]"
+      (onMessage)="handleMessageWithSelect($event)"
+    /> -->
 </div>
