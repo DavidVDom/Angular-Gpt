@@ -2,10 +2,15 @@
   <div class="chat-messages">
     <div class="grid gap-y-2">
       <!-- Chat Messages -->
-      <app-chat-message text="Escriba el texto que quiere revisar" />
+      <app-chat-message text="Escriba el texto que quieres que revise" />
 
       @for (message of messages(); track $index) { @if(message.isGpt){
-      <app-chat-message [text]="message.text" />
+      <!-- <app-chat-message [text]="message.text" /> -->
+      <app-gpt-message-orthography
+        [text]="message.text"
+        [errors]="message.info!.errors"
+        [userScore]="message.info!.userScore"
+      />
       }@else {
       <app-my-message [text]="message.text" />
       } }
@@ -17,20 +22,21 @@
     </div>
   </div>
   <!-- MessagesBox -->
-  <!-- <app-text-message-box
+  <app-text-message-box
     placeholder="Escribe el mensaje"
     (onMessage)="handleMessage($event)"
-  /> -->
+    [disableCorrections]="true"
+  />
   <!-- <app-text-message-box-file
     placeholder="Escribe el mensaje"
     (onMessage)="handleMessageWithFile($event)"
   /> -->
-  <app-text-message-box-select
+  <!-- <app-text-message-box-select
     placeholder="Escribe el mensaje"
     [options]="[
       { id: '1', text: 'Uno' },
       { id: '2', text: 'Dos' }
     ]"
     (onMessage)="handleMessageWithSelect($event)"
-  />
+  /> -->
 </div>

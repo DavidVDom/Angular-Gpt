@@ -13,12 +13,13 @@ import {
 // o también usar directamente el index.ts que hemos creado bajo components
 import {
   ChatMessageComponent,
+  GptMessageOrthographyComponent,
   MyMessageComponent,
   TextMessageBoxComponent,
-  TextMessageBoxEvent,
+  // TextMessageBoxEvent,
   TextMessageBoxFileComponent,
   TextMessageBoxSelectComponent,
-  TextMessageEvent,
+  // TextMessageEvent,
   TypingLoaderComponent,
 } from '@components/index';
 import { Message } from '@interfaces/message.interface';
@@ -30,6 +31,7 @@ import { OpenAiService } from '../../services/openai.service';
   imports: [
     CommonModule,
     ChatMessageComponent,
+    GptMessageOrthographyComponent,
     MyMessageComponent,
     TypingLoaderComponent,
     TextMessageBoxComponent,
@@ -40,19 +42,45 @@ import { OpenAiService } from '../../services/openai.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class OrthographyPageComponent {
-  public messages = signal<Message[]>([{ text: 'Hola Mundo', isGpt: true }]);
+  public messages = signal<Message[]>([
+    /*{ text: 'Hola Mundo', isGpt: false }*/
+  ]);
   public isLoading = signal(false);
   public openAiService = inject(OpenAiService); // es igual que si lo inyectáramos por el constructor
 
   handleMessage(prompt: string) {
-    console.log(prompt);
+    // console.log(prompt);
+    this.isLoading.set(true);
+
+    // actualizamos la lista de mensajes
+    this.messages.update((prev) => [
+      ...prev,
+      {
+        isGpt: false,
+        text: prompt,
+      },
+    ]);
+
+    this.openAiService.checkOrthography(prompt).subscribe((resp) => {
+      this.isLoading.set(false);
+
+      // actualizamos la lista de mensajes
+      this.messages.update((prev) => [
+        ...prev,
+        {
+          isGpt: true,
+          text: resp.message,
+          info: resp,
+        },
+      ]);
+    });
   }
 
-  handleMessageWithFile({ prompt, file }: TextMessageEvent) {
-    console.log({ prompt, file });
-  }
+  // handleMessageWithFile({ prompt, file }: TextMessageEvent) {
+  //   console.log({ prompt, file });
+  // }
 
-  handleMessageWithSelect(event: TextMessageBoxEvent) {
-    console.log(event);
-  }
+  // handleMessageWithSelect(event: TextMessageBoxEvent) {
+  //   console.log(event);
+  // }
 }

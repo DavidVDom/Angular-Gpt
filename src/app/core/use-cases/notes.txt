@@ -1,0 +1,3 @@
+En los casos de uso vamos a evitar referencias a angular y escribir código puro de typescript, para que sean trasladables a otros proyectos no angular.
+
+Los servicios los usaremos como puente entre los componentes de angular y los casos de uso.
